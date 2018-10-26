@@ -50,7 +50,7 @@ License: Creative Commons Attribution
 <form action="./markUp" method="post">
     <table align="center">
     <br/> <br/> <br/><br>
-    <tr><td> Upload File:</td><td><input type="file" name="fname"></td></tr>
+    <tr><td> Upload File:</td><td><input type="file" name="fname" ></td></tr>
 		<tr><td></td><td align="center"> <input type="submit" value="Upload"> </td></tr>
 			      </table>
 			  </form>

@@ -44,9 +44,9 @@ public class RegUpload extends HttpServlet {
 	             HttpSession session=request.getSession(true);
 	           
 	             //System.out.println(s_id);
-	             
 		      File excelFile =new File(file); // change this code to get the file from upload	    
-		   	    
+	            System.out.println(excelFile.getAbsoluteFile());
+
 		     
 		      Connection con=null;
 		      PreparedStatement pst=null;
