@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -16,26 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import javax.servlet.annotation.WebServlet;
-
 import org.apache.poi.ss.usermodel.Cell;            
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;                     
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
-@WebServlet("./RegUpload")
 public class RegUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int maxFileSize = 5000 * 1024;
 	private int maxMemSize = 400 * 1024;
 	private File file;
-
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
@@ -44,9 +37,9 @@ public class RegUpload extends HttpServlet {
 	             HttpSession session=request.getSession(true);
 	           
 	             //System.out.println(s_id);
-		      File excelFile =new File(file); // change this code to get the file from upload	    
-	            System.out.println(excelFile.getAbsoluteFile());
-
+			
+		      File excelFile =null;
+		   	    
 		     
 		      Connection con=null;
 		      PreparedStatement pst=null;
@@ -58,8 +51,8 @@ public class RegUpload extends HttpServlet {
 		      {
 						Class.forName("com.mysql.jdbc.Driver");  
 			             con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/reportgenerator","root","password");  
-			             excelFile = new File(file);
-			  		   System.out.println(excelFile);
+			             excelFile = new File("/home/samhith/git/repository/JSheet/"+file);//change this directory to get file
+				  		   System.out.println("///////"+file);
 			  	       fileInputeStream = new FileInputStream(excelFile);     
 			  	       System.out.println(fileInputeStream);
 			  	       workbook = WorkbookFactory.create(fileInputeStream);
@@ -69,12 +62,11 @@ public class RegUpload extends HttpServlet {
 			  	       int lastRow = sheet.getLastRowNum();
 			  	      System.out.println("last row is"+lastRow);
 			  	      //sheet.getFirstRowNum()+1 used to skip the header part.
-			  	       for (int i = sheet.getFirstRowNum()+1; i <= lastRow; i++) {
+			  	       for (int i = sheet.getFirstRowNum(); i <= lastRow; i++) {
 			  	       row = (Row) sheet.getRow(i);
 			  	       
 			  	    
 			 	    
-			  	       
 			  	       
 			                String id = row.getCell(0).getStringCellValue();
 			                String password = row.getCell(1).getStringCellValue();
@@ -84,6 +76,7 @@ public class RegUpload extends HttpServlet {
 			                String address = row.getCell(5).getStringCellValue();
 			                String dept = row.getCell(6).getStringCellValue();
 			                String utype = row.getCell(7).getStringCellValue();
+			                System.out.println("111111"+id+password+name+email+phone+address+dept+utype);
 			                
 			                pst = con.prepareStatement("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)");
 			                pst.setString(1, id);
@@ -104,6 +97,7 @@ public class RegUpload extends HttpServlet {
 
 		} 
 		catch (Exception ex) {
-ex.printStackTrace();		}
+			System.out.println(ex);
+		}
 	}
 }

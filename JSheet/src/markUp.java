@@ -38,7 +38,7 @@ public class markUp extends HttpServlet {
 	           
 	             //System.out.println(s_id);
 			
-		    // File excelFile =new File(file); // change this code to get the file from upload	    
+		     File excelFile =null; // change this code to get the file from upload	    
 		   	    
 		     
 		      Connection con=null;
@@ -51,9 +51,9 @@ public class markUp extends HttpServlet {
 		      {
 						Class.forName("com.mysql.jdbc.Driver");  
 			             con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/reportgenerator","root","password");  
-			             //excelFile = new File(file);
-			  		   System.out.println(file);
-			  	       fileInputeStream = new FileInputStream("/JSheet/test.xlsx");     
+			             excelFile = new File("/home/samhith/"+file);//change th
+			  		   System.out.println("///////"+file);
+			  	       fileInputeStream = new FileInputStream(excelFile);     
 			  	       System.out.println(fileInputeStream);
 			  	       workbook = WorkbookFactory.create(fileInputeStream);
 			  	       sheet = workbook.getSheetAt(0); // 0 is to read the first sheet.
@@ -78,6 +78,7 @@ public class markUp extends HttpServlet {
 			                int TotalMarks = (int) row.getCell(5).getNumericCellValue();
 			                int Credits = (int) row.getCell(6).getNumericCellValue();
 			               
+			                System.out.println(Hallticket+SubjectCode+SubjectName+InternalMarks+ExternalMarks);
 			                pst = con.prepareStatement("INSERT INTO marks VALUES(?,?,?,?,?,?,?)");
 			                pst.setString(1, Hallticket);
 			                pst.setString(2, SubjectCode);
