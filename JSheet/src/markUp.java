@@ -51,7 +51,7 @@ public class markUp extends HttpServlet {
 		      {
 						Class.forName("com.mysql.jdbc.Driver");  
 			             con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/reportgenerator","root","password");  
-			             excelFile = new File("/home/samhith/"+file);//change th
+			             excelFile = new File("/home/samhith/"+file);//change this directory to get file upload
 			  		   System.out.println("///////"+file);
 			  	       fileInputeStream = new FileInputStream(excelFile);     
 			  	       System.out.println(fileInputeStream);
